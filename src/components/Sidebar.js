@@ -1,7 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect } from 'react-redux';
+import {addDeck, showAddDeck, hideAddDeck} from '../actions';
+/* 
+
+            decks={state.decks} 
+            addingDeck={state.addingDeck} 
+
+
+            addDeck={name=> store.dispatch(addDeck(name))}
+            showAddDeck={()=> store.dispatch(showAddDeck())}
+            hideAddDeck={()=> store.dispatch(hideAddDeck())}
+*/
+
+const mapStateToProps  = (state) => {
+    return {
+
+            decks: state.decks,
+            addingDeck: state.addingDeck 
+    };
+};
+
+const mapDispatchToProps = (dispatch)  => {
+    return {
+            addDec: name=> dispatch(addDeck(name)),
+            showAddDeck: ()=> dispatch(showAddDeck()),
+            hideAddDeck: () => dispatch(hideAddDeck())
+    }
+}
 
 //react createClass deprecated!
+// this is a presentational component
 const Sidebar = React.createClass({
     //lifecycle methods
     componentDidUpdate(){
@@ -36,4 +65,5 @@ const Sidebar = React.createClass({
     }
 });
 
-export default Sidebar;
+//exports new Container component
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
